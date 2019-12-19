@@ -39,6 +39,12 @@ app.use((err, req, res, next) => {
 // });
 
 app.use(jwtCheck);
+/** What we are adding now is the ability to check if the client has permissions to view the endpoint requested.
+ * To do this, we’ll create another middleware that will look at the decoded JWT and see if it the token has the
+ * correct scope. If it doesn’t we’ll send an appropriate forbidden message, otherwise we’ll send the data. */
+// ==============================================================================================
+// Scopes allow us to grant specific permissions to clients that are authorized to use our API
+// ==============================================================================================
 
 var guard = (req, res, next) => {
 	// we’ll use a case switch statement on the route requested
