@@ -38,7 +38,7 @@ app.use((err, req, res, next) => {
 // 	algorithms: ["RS256"]
 // });
 
-app.use(jwtCheck);
+// app.use(jwtCheck);
 /** What we are adding now is the ability to check if the client has permissions to view the endpoint requested.
  * To do this, we’ll create another middleware that will look at the decoded JWT and see if it the token has the
  * correct scope. If it doesn’t we’ll send an appropriate forbidden message, otherwise we’ll send the data. */
@@ -54,9 +54,10 @@ var guard = (req, res, next) => {
 			var permissions = ["general"];
 			for (var i = 0; i < permissions.length; i++) {
 				if (req.user.scope.includes(permissions[i])) {
+					// Move to next middleware if return 'true' i.e there is permission
 					next();
 				} else {
-					res.send(403, { message: "Forbidden" });
+					res.status(403).json({ message: "Forbidden" });
 				}
 			}
 			break;
@@ -66,6 +67,7 @@ var guard = (req, res, next) => {
 			var permissions = ["general"];
 			for (var i = 0; i < permissions.length; i++) {
 				if (req.user.scope.includes(permissions[i])) {
+					// Move to next middleware if return 'true' i.e there is permission
 					next();
 				} else {
 					res.send(403, { message: "Forbidden" });
@@ -78,9 +80,10 @@ var guard = (req, res, next) => {
 			var permissions = ["general"];
 			for (var i = 0; i < permissions.length; i++) {
 				if (req.user.scope.includes(permissions[i])) {
+					// Move to next middleware if return 'true' i.e there is permission
 					next();
 				} else {
-					res.send(403, { message: "Forbidden" });
+					res.status(403).json({ message: "Forbidden" });
 				}
 			}
 			break;
@@ -91,9 +94,10 @@ var guard = (req, res, next) => {
 			console.log(req.user.scope);
 			for (var i = 0; i < permissions.length; i++) {
 				if (req.user.scope.includes(permissions[i])) {
+					// Move to next middleware if return 'true' i.e there is permission
 					next();
 				} else {
-					res.send(403, { message: "Forbidden" });
+					res.status(403).json({ message: "Forbidden" });
 				}
 			}
 			break;
