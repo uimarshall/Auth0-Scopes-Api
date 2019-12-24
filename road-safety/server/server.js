@@ -46,7 +46,7 @@ app.use((err, req, res, next) => {
 // Scopes allow us to grant specific permissions to clients that are authorized to use our API
 // ==============================================================================================
 
-var guard = (req, res, next) => {
+var secured = (req, res, next) => {
 	// we’ll use a case switch statement on the route requested
 	switch (req.path) {
 		// if the request is for vehicle reviews we’ll check to see if the token has general scope
@@ -97,7 +97,7 @@ var guard = (req, res, next) => {
 					// Move to next middleware if return 'true' i.e there is permission
 					next();
 				} else {
-					res.status(403).json({ message: "Forbidden" });
+					res.status(403).json({ message: "Forbidden route" });
 				}
 			}
 			break;
@@ -107,7 +107,7 @@ var guard = (req, res, next) => {
 
 // existing app.use middleware
 
-app.use(guard);
+app.use(secured);
 
 // =============================ROUTES============================================
 
